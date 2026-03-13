@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.krental.roomapptareas.ui.agregar_tarea.AgregarTareaScreen
+import com.krental.roomapptareas.ui.lista_tareas.ListaTareasScreen
 import com.krental.roomapptareas.ui.theme.RoomAppTareasTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RoomAppTareasTheme {
-                AgregarTareaScreen()
+                ListaTareasScreen()
+                //AgregarTareaScreen()
             }
         }
     }
