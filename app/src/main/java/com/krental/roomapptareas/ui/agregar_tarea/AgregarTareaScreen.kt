@@ -3,6 +3,7 @@ package com.krental.roomapptareas.ui.agregar_tarea
 import android.R.attr.label
 import android.R.attr.maxLines
 import android.R.attr.text
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -37,6 +39,9 @@ fun AgregarTareaScreen(
 ){
     var titulo by remember{ mutableStateOf("") }
     var descripcion by remember{ mutableStateOf("") }
+
+    //Obterner el contexto actual para utilizar Toast
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -79,6 +84,11 @@ fun AgregarTareaScreen(
                             fechaCreacion = obtenerFechaActal(),
                         )
                         viewModel.insertarTarea(nuevaTarea)
+                        Toast.makeText(
+                            context,
+                            "Tarea agregada correctamente",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         navController.popBackStack()
                     }
                 },
