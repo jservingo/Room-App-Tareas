@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.krental.roomapptareas.data.local.entity.TareaEntity
 import com.krental.roomapptareas.ui.viewmodel.TareaViewModel
 import com.krental.roomapptareas.utils.obtenerFechaActal
@@ -31,7 +32,8 @@ import com.krental.roomapptareas.utils.obtenerFechaActal
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgregarTareaScreen(
-    viewModel: TareaViewModel = hiltViewModel()
+    viewModel: TareaViewModel = hiltViewModel(),
+    navController: NavController
 ){
     var titulo by remember{ mutableStateOf("") }
     var descripcion by remember{ mutableStateOf("") }
@@ -77,6 +79,7 @@ fun AgregarTareaScreen(
                             fechaCreacion = obtenerFechaActal(),
                         )
                         viewModel.insertarTarea(nuevaTarea)
+                        navController.popBackStack()
                     }
                 },
                 modifier = Modifier.align(Alignment.End)

@@ -23,12 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.krental.roomapptareas.ui.viewmodel.TareaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListaTareasScreen(
-    viewModel: TareaViewModel = hiltViewModel()
+    viewModel: TareaViewModel = hiltViewModel(),
+    navController: NavController
 ){
     val tareas by viewModel.tareas.collectAsState()
 
@@ -41,7 +43,7 @@ fun ListaTareasScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-
+                    navController.navigate("pantallaAgregarTarea")
                 }
             ){
                 Icon(
@@ -68,7 +70,12 @@ fun ListaTareasScreen(
                     .padding(16.dp)
             ) {
                 items(tareas) { tarea ->
-                    TareaItem(tarea = tarea)
+                    TareaItem(
+                        tarea = tarea,
+                        onEliminarClick = { tareaSeleccionada ->
+                            viewModel.eliminarTarea(tareaSeleccionada)
+                        }
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

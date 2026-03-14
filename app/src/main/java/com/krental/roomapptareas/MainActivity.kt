@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.krental.roomapptareas.navigation.AppNavigation
 import com.krental.roomapptareas.ui.agregar_tarea.AgregarTareaScreen
 import com.krental.roomapptareas.ui.lista_tareas.ListaTareasScreen
 import com.krental.roomapptareas.ui.theme.RoomAppTareasTheme
@@ -23,8 +25,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RoomAppTareasTheme {
-                ListaTareasScreen()
-                //AgregarTareaScreen()
+                val navController = rememberNavController()
+                AppNavigation(navController)
             }
         }
     }

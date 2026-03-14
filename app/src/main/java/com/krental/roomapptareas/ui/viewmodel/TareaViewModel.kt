@@ -31,6 +31,12 @@ class TareaViewModel @Inject constructor(
             repository.insertarTarea(tarea)
         }
     }
+
+    fun eliminarTarea(tarea: TareaEntity) {
+        viewModelScope.launch {
+            repository.eliminarTarea(tarea)
+        }
+    }
 }
 
 
