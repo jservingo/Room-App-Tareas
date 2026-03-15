@@ -1,7 +1,9 @@
 package com.krental.roomapptareas.ui.editar_tarea
 
+import android.R.attr.bottom
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -19,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,9 +44,10 @@ fun EditarTareaScreen(
 
     val tarea by viewModel.tareaSeleccionada.collectAsState(null)
 
-    var titulo by remember{ mutableStateOf("") }
-    var descripcion by remember{ mutableStateOf("") }
+    var titulo by rememberSaveable(){ mutableStateOf("") }
+    var descripcion by rememberSaveable(){ mutableStateOf("") }
     var datosCargados by remember{ mutableStateOf(false) }
+    var completada by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.cargarTareaPorId(tareaId)
@@ -52,6 +57,7 @@ fun EditarTareaScreen(
         if (tarea != null && !datosCargados){
             titulo = tarea!!.titulo
             descripcion = tarea!!.descripcion?:""
+            completada = tarea!!.completada
             datosCargados = true
         }
     }
@@ -88,6 +94,30 @@ fun EditarTareaScreen(
                 maxLines = 10
             )
             Spacer(modifier = Modifier.height(24.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp)
+            ){
+                Text(text="¿Tarea completada?",
+                    modifier = Modifier
+                        .weight(1f)
+                )
+                Switch(
+                    checked = completada,
+                    onCheckedChange = { isChecked ->
+                        completada = isChecked
+                        tarea?.let {
+                            viewModel.actualizarTarea(
+                                it.copy(
+                                    completada = isChecked
+                                )
+                            )
+                        }
+                    }
+                )
+            }
             Button(
                 onClick = {
                     if (titulo.isNotBlank()) {
@@ -95,7 +125,8 @@ fun EditarTareaScreen(
                             viewModel.actualizarTarea(
                                 it.copy(
                                     titulo =titulo,
-                                    descripcion = descripcion
+                                    descripcion = descripcion,
+                                    completada = completada
                                 )
                             )
                             Toast.makeText(
