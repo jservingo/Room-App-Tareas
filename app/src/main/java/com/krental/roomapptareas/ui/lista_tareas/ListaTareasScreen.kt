@@ -74,6 +74,9 @@ fun ListaTareasScreen(
                         tarea = tarea,
                         onEliminarClick = { tareaSeleccionada ->
                             viewModel.eliminarTarea(tareaSeleccionada)
+                        },
+                        onEditarClick = { tareaSeleccionada ->
+                            navController.navigate("editarTareaScreen/${tareaSeleccionada.id}")
                         }
                     )
                     Spacer(modifier = Modifier.height(8.dp))

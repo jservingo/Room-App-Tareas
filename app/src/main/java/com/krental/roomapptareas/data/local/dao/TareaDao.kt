@@ -21,6 +21,9 @@ interface TareaDao {
     @Update
     suspend fun actualizarTarea(tarea: TareaEntity)
 
+    @Query("SELECT * FROM tareas WHERE id = :id")
+    suspend fun obtenerTareaPorId(id: Int) : TareaEntity?
+
     @Delete
     suspend fun eliminarTarea(tarea: TareaEntity)
 

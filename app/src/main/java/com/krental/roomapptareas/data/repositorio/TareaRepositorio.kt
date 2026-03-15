@@ -20,6 +20,10 @@ class TareaRepositorio @Inject constructor(
         tareaDao.actualizarTarea(tarea)
     }
 
+    suspend fun obtenerTareaPorId(id: Int) : TareaEntity? {
+        return tareaDao.obtenerTareaPorId(id)
+    }
+
     suspend fun eliminarTarea(tarea: TareaEntity) {
         tareaDao.eliminarTarea(tarea)
     }

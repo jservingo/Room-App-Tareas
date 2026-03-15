@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -33,7 +34,8 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun TareaItem(
     tarea: TareaEntity,
-    onEliminarClick: (TareaEntity) -> Unit
+    onEliminarClick: (TareaEntity) -> Unit,
+    onEditarClick:(TareaEntity) -> Unit
 ) {
     var mostrarDialogo by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -77,6 +79,22 @@ fun TareaItem(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Eliminar tarea",
                     tint = Color.Red
+                )
+            }
+
+            IconButton(
+                onClick = {
+                    onEditarClick(tarea)
+                },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+                    .padding(horizontal=30.dp)
+            ){
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Editar tarea",
+                    tint = Color.Blue
                 )
             }
 
