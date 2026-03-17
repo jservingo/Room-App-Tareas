@@ -77,6 +77,9 @@ fun ListaTareasScreen(
                         },
                         onEditarClick = { tareaSeleccionada ->
                             navController.navigate("editarTareaScreen/${tareaSeleccionada.id}")
+                        },
+                        onVerDetalleClick = { tareaSeleccionada ->
+                            navController.navigate("detalle/${tareaSeleccionada.id}")
                         }
                     )
                     Spacer(modifier = Modifier.height(8.dp))

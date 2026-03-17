@@ -28,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.krental.roomapptareas.data.local.entity.TareaEntity
 import com.krental.roomapptareas.ui.viewmodel.TareaViewModel
@@ -37,9 +39,9 @@ import com.krental.roomapptareas.utils.obtenerFechaActal
 @Composable
 fun EditarTareaScreen(
     navController: NavController,
-    tareaId: Int,
-    viewModel: TareaViewModel
+    tareaId: Int
 ){
+    val viewModel: TareaViewModel = hiltViewModel()
     val context = LocalContext.current
 
     val tarea by viewModel.tareaSeleccionada.collectAsState(null)

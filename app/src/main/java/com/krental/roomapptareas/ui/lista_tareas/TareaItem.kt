@@ -2,6 +2,7 @@ package com.krental.roomapptareas.ui.lista_tareas
 
 import android.R.attr.onClick
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,13 +37,18 @@ import androidx.compose.ui.platform.LocalContext
 fun TareaItem(
     tarea: TareaEntity,
     onEliminarClick: (TareaEntity) -> Unit,
-    onEditarClick:(TareaEntity) -> Unit
+    onEditarClick:(TareaEntity) -> Unit,
+    onVerDetalleClick : (TareaEntity) ->Unit
 ) {
     var mostrarDialogo by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onVerDetalleClick(tarea) }
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
     ){
         Box(
             modifier = Modifier.fillMaxWidth()
