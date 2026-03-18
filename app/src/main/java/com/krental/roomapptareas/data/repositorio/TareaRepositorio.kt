@@ -31,4 +31,8 @@ class TareaRepositorio @Inject constructor(
     suspend fun eliminarTodasLasTareas() {
         tareaDao.eliminarTodasLasTareas()
     }
+
+    suspend fun buscarTareas(query: String): List<TareaEntity> {
+        return tareaDao.buscarTareas(query)
+    }
 }

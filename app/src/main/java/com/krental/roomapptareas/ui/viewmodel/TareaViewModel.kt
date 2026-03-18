@@ -23,6 +23,9 @@ class TareaViewModel @Inject constructor(
     private val _tarea_seleccionada = MutableStateFlow<TareaEntity?>(null)
     val tareaSeleccionada : StateFlow<TareaEntity?> = _tarea_seleccionada
 
+    private val _tareasFiltradas = MutableStateFlow<List<TareaEntity>>(emptyList())
+    val tareasFiltradas : StateFlow<List<TareaEntity>> = _tareasFiltradas
+
     init {
         viewModelScope.launch {
             repository.obtenerTodasLasTareas().collect {
@@ -31,15 +34,18 @@ class TareaViewModel @Inject constructor(
         }
     }
 
-    fun insertarTarea(tarea: TareaEntity) {
+    fun insertarTarea(tarea: TareaEntity, query: String) {
         viewModelScope.launch {
             repository.insertarTarea(tarea)
+            Log.d("query", query)
+            buscarTareas(query)
         }
     }
 
-    fun eliminarTarea(tarea: TareaEntity) {
+    fun eliminarTarea(tarea: TareaEntity, query: String) {
         viewModelScope.launch {
             repository.eliminarTarea(tarea)
+            buscarTareas(query)
         }
     }
 
@@ -54,6 +60,13 @@ class TareaViewModel @Inject constructor(
             val tarea = repository.obtenerTareaPorId(id)
             Log.d("ID", tarea?.id.toString())
             _tarea_seleccionada.value = tarea
+        }
+    }
+
+    fun buscarTareas(query: String){
+        viewModelScope.launch {
+            val resultado = repository.buscarTareas(query)
+            _tareasFiltradas.value = resultado
         }
     }
 }

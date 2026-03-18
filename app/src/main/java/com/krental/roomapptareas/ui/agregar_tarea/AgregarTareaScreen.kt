@@ -35,7 +35,8 @@ import com.krental.roomapptareas.utils.obtenerFechaActal
 @Composable
 fun AgregarTareaScreen(
     viewModel: TareaViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    query: String
 ){
     var titulo by remember{ mutableStateOf("") }
     var descripcion by remember{ mutableStateOf("") }
@@ -83,10 +84,10 @@ fun AgregarTareaScreen(
                             descripcion = descripcion,
                             fechaCreacion = obtenerFechaActal(),
                         )
-                        viewModel.insertarTarea(nuevaTarea)
+                        viewModel.insertarTarea(nuevaTarea, query)
                         Toast.makeText(
                             context,
-                            "Tarea agregada correctamente",
+                            "Tarea agregada correctamente $query",
                             Toast.LENGTH_SHORT
                         ).show()
                         navController.popBackStack()

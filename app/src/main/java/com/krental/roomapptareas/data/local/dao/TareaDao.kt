@@ -29,4 +29,7 @@ interface TareaDao {
 
     @Query("DELETE from tareas")
     suspend fun eliminarTodasLasTareas()
+
+    @Query("SELECT * from tareas WHERE titulo LIKE '%' || :query || '%' OR descripcion LIKE '%' || :query || '%'")
+    suspend fun buscarTareas(query: String): List<TareaEntity>
 }

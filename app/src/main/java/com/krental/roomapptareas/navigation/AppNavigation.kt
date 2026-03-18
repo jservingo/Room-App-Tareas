@@ -28,8 +28,15 @@ fun AppNavigation(
         composable(route = "pantallaListaTareas") {
             ListaTareasScreen(navController = navController)
         }
-        composable(route = "pantallaAgregarTarea") {
-            AgregarTareaScreen(navController = navController)
+        composable(
+            route = "pantallaAgregarTarea/{query}",
+            arguments = listOf(navArgument("query"){type = NavType.StringType})
+        ) { navBackStackEntry ->
+            val query = navBackStackEntry.arguments?.getString("query") ?: ""
+            AgregarTareaScreen(
+                navController = navController,
+                query = query
+            )
         }
         composable(
             route = "editarTareaScreen/{tareaId}",
